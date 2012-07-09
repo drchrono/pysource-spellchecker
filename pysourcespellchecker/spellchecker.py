@@ -35,7 +35,8 @@ class URLFilter(URLFilter):
                           r"<[a-zA-z]+:\/\/[^\s].*>)")
 
 
-filters_to_use = [EmailFilter,URLFilter,SheBangFilter]
+filters_to_use = [EmailFilter, URLFilter, SheBangFilter]
+
 
 class SpellChecker(object):
     def __init__(self, language, pwl=None):
