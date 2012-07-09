@@ -21,8 +21,6 @@ class SheBangFilter(Filter):
     This filter skips any words matching the following regular expression:
 
            ^#!/.+python.*$
-
-    That is, any words that resemble email addresses.
     """
     _pattern = re.compile(r"^#!/.+$")
     def _skip(self,word):
@@ -31,7 +29,14 @@ class SheBangFilter(Filter):
         return False
 
 
-filters_to_use = [EmailFilter,URLFilter,SheBangFilter]
+class URLFilter(URLFilter):
+    _pattern = re.compile(r"^([a-zA-z]+:\/\/[^\s].*"
+                          "|"
+                          r"<[a-zA-z]+:\/\/[^\s].*>)")
+
+
+filters_to_use = [EmailFilter, URLFilter, SheBangFilter]
+
 
 class SpellChecker(object):
     def __init__(self, language, pwl=None):
@@ -45,6 +50,7 @@ class SpellChecker(object):
         for err in self._checker:
             print err.word, '==>', err.suggest()
         return text
+
 
 
 class CmdLineSpellChecker(object):

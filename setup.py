@@ -7,8 +7,8 @@ from setuptools import setup, find_packages
 
 setup(
     name = "pysource-spellchecker",
-    version = "0.1.1",
-    scripts = ['pypsource-spellchecker'],
+    version = "0.1.2",
+    scripts = ['pysource-spellchecker'],
     install_requires = ['pyenchant'],
 
     packages=find_packages(exclude=['ez_setup']),

@@ -9,7 +9,7 @@ Spellcheck strings and comments in Python source files using Enchant
 ---------------------------------------------------------------------
 
 :Author:    Hartmut Goebel <h.goebel@crazy-compilers.com>
-:Version:   Version 0.1
+:Version:   Version 0.1.2
 :Copyright: 2012 by Hartmut Goebel
 :Licence:   GNU Public Licence v3 (GPLv3)
 :Homepage:  http://github.com/htgoebel/pysource-spellchecker
