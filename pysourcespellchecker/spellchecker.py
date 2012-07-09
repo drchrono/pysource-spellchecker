@@ -29,6 +29,12 @@ class SheBangFilter(Filter):
         return False
 
 
+class URLFilter(URLFilter):
+    _pattern = re.compile(r"^([a-zA-z]+:\/\/[^\s].*"
+                          "|"
+                          r"<[a-zA-z]+:\/\/[^\s].*>)")
+
+
 filters_to_use = [EmailFilter,URLFilter,SheBangFilter]
 
 class SpellChecker(object):
@@ -43,6 +49,7 @@ class SpellChecker(object):
         for err in self._checker:
             print err.word, '==>', err.suggest()
         return text
+
 
 
 class CmdLineSpellChecker(object):
