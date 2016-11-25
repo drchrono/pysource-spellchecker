@@ -44,16 +44,13 @@ class SpellChecker(object):
                                       filters=filters_to_use)
 
     def check(self, text, **kwargs):
-        ctext = text[2:] if (
-            "u'" == text[0:2]
-            or 'u"' == text[0:2]) else text
-
+        ctext = re.sub("\"|'|#|`", " ", text)
         self._checker.set_text(ctext)
         for err in self._checker:
             string = ''
             for key, value in kwargs.iteritems():
                 string += '%s:%s - ' % (key, value)
-            string += err.word_ + '==>' + str(err.suggest())
+            string += err.word + '==>' + str(err.suggest())
             string = string.encode('utf-8')
             print string
 
