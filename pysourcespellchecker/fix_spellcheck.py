@@ -9,10 +9,6 @@ from lib2to3 import fixer_base
 from lib2to3.pygram import token
 from lib2to3.fixer_util import Leaf
 
-__author__ = "Hartmut Goebel <h.goebel@crazy-compilers.com>"
-__copyright__ = "Copyright 2012 by Hartmut Goebel <h.goebel@crazy-compilers.com>"
-__licence__ = "GNU Public Licence v3 (GPLv3)"
-
 
 class FixSpellcheck(fixer_base.BaseFix):
 
@@ -20,7 +16,8 @@ class FixSpellcheck(fixer_base.BaseFix):
 
         def check(node, name):
             intext = getattr(node, name)
-            corrected = spellchecker.check(intext)
+            corrected = spellchecker.check(
+                intext, lineno=node.lineno)
             if corrected != intext:
                 setattr(node, name, corrected)
                 node.changed()
