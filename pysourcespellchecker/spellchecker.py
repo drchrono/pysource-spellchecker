@@ -37,7 +37,8 @@ filters_to_use = [EmailFilter, URLFilter, SheBangFilter]
 
 class SpellChecker(object):
 
-    def __init__(self, language, pwl=None):
+    def __init__(self, language, files, pwl=None):
+        self.files = files
         if pwl:
             language = enchant.DictWithPWL(language, pwl)
         self._checker = _SpellChecker(lang=language,
@@ -45,12 +46,19 @@ class SpellChecker(object):
 
     def check(self, text, **kwargs):
         ctext = re.sub("\"|'|#|`", " ", text)
+
         self._checker.set_text(ctext)
+
         for err in self._checker:
-            string = ''
+            if 'lineno' in kwargs:  # HACK
+                lineno = kwargs.pop('lineno')
+                string = self.files[0] + ':' + str(lineno) + ' - '
+            else:
+                string = ''
+
             for key, value in kwargs.iteritems():
                 string += '%s:%s - ' % (key, value)
-            string += err.word + '==>' + str(err.suggest())
+            string += err.word + ' ==> ' + str(err.suggest())
             string = string.encode('utf-8')
             print string
 

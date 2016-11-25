@@ -20,7 +20,7 @@ class moo_CMDLINE: pass
 def main(language, files, pwl=None, mode_of_operation=moo_LIST,
          writeback=True, show_diffs=False, backups=False):
     if mode_of_operation is moo_LIST:
-        checker = spellmod.SpellChecker(language, pwl)
+        checker = spellmod.SpellChecker(language, files, pwl)
     elif mode_of_operation is moo_CMDLINE:
         checker = spellmod.CmdLineSpellChecker(language, pwl)
     else:
