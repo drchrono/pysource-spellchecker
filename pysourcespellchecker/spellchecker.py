@@ -34,6 +34,10 @@ class URLFilter(URLFilter):
 
 filters_to_use = [EmailFilter, URLFilter, SheBangFilter]
 
+RED = '\033[01;31m'
+GREEN = '\033[01;32m'
+COLOR_RESET = '\033[0m'
+
 
 class SpellChecker(object):
 
@@ -48,21 +52,29 @@ class SpellChecker(object):
         ctext = re.sub("\"|'|#|`", " ", text)
 
         self._checker.set_text(ctext)
-
+        string = ''
         for err in self._checker:
-            if 'lineno' in kwargs:  # HACK
-                lineno = kwargs.pop('lineno')
-                string = self.files[0] + ':' + str(lineno) + ' - '
-            else:
-                string = ''
-
-            for key, value in kwargs.iteritems():
-                string += '%s:%s - ' % (key, value)
-            string += err.word + ' ==> ' + str(err.suggest())
-            string = string.encode('utf-8')
-            print string
-
+            self.print_to_console(
+                err.word, err.suggest(), **kwargs)
         return text
+
+    def print_to_console(self, word, suggestions, **kwargs):
+        if 'lineno' in kwargs:  # HACK
+            lineno = kwargs.pop('lineno')
+            string = self.files[0] + ':' + str(lineno) + ' - '
+        else:
+            string = ''
+
+        for key, value in kwargs.iteritems():
+            string += '%s:%s - ' % (key, value)
+
+        # build and print colorized string
+        string += RED + word
+        string += COLOR_RESET + ' ==> '
+        string += GREEN + str(suggestions)
+        string += COLOR_RESET
+        string = string.encode('utf-8')
+        print string
 
 
 class CmdLineSpellChecker(object):
