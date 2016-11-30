@@ -3,14 +3,12 @@
 spellchecking strings and comments in Python source files
 """
 
-import lib2to3.main
 import argparse
+import lib2to3.main
+import sys
+
 import pysourcespellchecker.spellchecker as spellmod
 import pysourcespellchecker.fix_spellcheck
-
-__author__ = "Hartmut Goebel <h.goebel@crazy-compilers.com>"
-__copyright__ = "Copyright 2012 by Hartmut Goebel <h.goebel@crazy-compilers.com>"
-__licence__ = "GNU Public Licence v3 (GPLv3)"
 
 
 class moo_LIST: pass
@@ -34,7 +32,10 @@ def main(language, files, pwl=None, mode_of_operation=moo_LIST,
     if not backups:
         args.append('--nobackups')
     args.extend(files)
-    lib2to3.main.main('pysourcespellchecker', args)
+    noerrors = lib2to3.main.main('pysourcespellchecker', args)
+
+    if not noerrors:
+        sys.exit(1)
 
 
 if __name__ == '__main__':
