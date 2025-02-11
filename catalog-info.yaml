@@ -1,0 +1,16 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: pysource-spellchecker
+  description: spell-checking strings and comments in Python source files
+  annotations:
+    business-unit: EverHealth
+    github.com/project-slug: drchrono/pysource-spellchecker
+    product: DRC
+spec:
+  type: service
+  lifecycle: production
+  owner: EverHealth
+  implementation:
+    languages:
+    - Python
